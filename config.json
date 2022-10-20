@@ -1,0 +1,7 @@
+{
+	"username": "first.last@example.com",
+	"applicationID": "yourid",
+	"password": "*******",
+	
+	"httpPort": 3000
+}

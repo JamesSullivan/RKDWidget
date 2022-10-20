@@ -1,0 +1,28 @@
+{
+  "name": "rkd-widgets",
+  "version": "1.0.0",
+  "description": "Sample html display widgets using RKD data",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "RKD",
+    "JSON",
+    "javascript",
+    "nodejs",
+    "quote",
+    "chart",
+    "financial",
+    "real-time",
+    "LSEG"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.83.0"
+  }
+}
