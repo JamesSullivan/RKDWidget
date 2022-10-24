@@ -10,8 +10,31 @@ const config = require("./config.json")
 const indexFile = "index.html";
 const port = config.httpPort || 3000;
 
-
-
+const promise1 = new Promise((resolve, reject) => {
+	resolve('Success!');
+      });      
+const { ToadScheduler, SimpleIntervalJob, AsyncTask } = require('toad-scheduler')
+const scheduler = new ToadScheduler()
+const task = new AsyncTask(
+	'simple task', 
+	() => { return authWidget.authenticate(config.username, config.password, config.applicationID)
+		.then(token => {
+			// successful authentication, keep a global copy of appID and token
+			global.applicationID = config.applicationID;
+			global.token = token;
+			console.log(`Received authorization token: ${token}`);
+			
+		})
+		.catch(err => {
+			console.log("Unable to get authentication token. Please check username/password in config.json");
+			console.log("");
+			console.log("Received error: ", err);
+		});
+	 }
+    )
+    const job = new SimpleIntervalJob({ minutes: 60, runImmediately: true }, task)
+    
+    scheduler.addSimpleIntervalJob(job)
 
 // attach a binding to serve http requests
 var server = http.createServer(function(req, resp) {
@@ -76,28 +99,8 @@ var server = http.createServer(function(req, resp) {
 	}
 });
 
-
-
-
-
-console.log("Requesting API authorization token...");
-authWidget.authenticate(config.username, config.password, config.applicationID)
-	.then(token => {
-		// successful authentication, keep a global copy of appID and token
-		global.applicationID = config.applicationID;
-		global.token = token;
-		console.log(`Received authorization token: ${token}`);
-		
-		console.log("Starting HTTP server...");
-		// start the http server
-		server.listen(port, function(){
-			console.log("Node server HTTP started on: " + port);
-		});
-		
-	})
-	.catch(err => {
-		console.log("Unable to get authentication token. Please check username/password in config.json");
-		console.log("");
-		console.log("Received error: ", err);
-	});
-
+console.log("Starting HTTP server...");
+// start the http server
+server.listen(port, function(){
+	console.log("Node server HTTP started on: " + port);
+});
